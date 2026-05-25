@@ -3,53 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit Sri Lanka | Official Travel Portal</title>
+    <title>Travel | Visit Sri Lanka</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: white; overflow-x: hidden; }
+        .sinhala { font-family: 'Noto Sans Sinhala', sans-serif; }
         .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('http://googleusercontent.com/image_collection/image_retrieval/1683563818354068860_0');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=2070');
             background-size: cover;
             background-position: center;
             height: 100vh;
         }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="text-white">
+<body>
 
-    <div class="hero-section flex flex-col">
-        
-        <nav class="flex justify-between items-center p-8 px-16">
-            <div class="text-2xl font-bold flex items-center cursor-pointer">
-                <span class="mr-2">🥾</span> Travel.
-            </div>
-            <div class="flex space-x-8 text-sm font-medium">
-                <a href="#" class="hover:text-emerald-400 transition">Home</a>
-                <a href="#" class="hover:text-emerald-400 transition">Adventure</a>
-                <a href="#" class="hover:text-emerald-400 transition">Map</a>
-                <a href="#" class="hover:text-emerald-400 transition">Blogs</a>
-                <a href="#" class="hover:text-emerald-400 transition">Events</a>
-                <a href="#" class="hover:text-emerald-400 transition">Products</a>
-                <a href="#" class="hover:text-emerald-400 transition">About Us</a>
-                <a href="#" class="font-bold cursor-pointer hover:text-emerald-400">🔍</a>
-            </div>
-        </nav>
-
-        <div class="flex-grow flex flex-col justify-center px-16 max-w-4xl">
-            <h2 class="text-emerald-400 font-bold text-xl tracking-widest mb-2 shadow-text">#VISIT</h2>
-            <h1 class="text-8xl font-black mb-6 leading-tight">SRI LANKA</h1>
-            <p class="text-lg text-gray-200 mb-8 leading-relaxed max-w-2xl bg-black/20 p-4 rounded-xl backdrop-blur-sm">
-                Sri Lanka Is An Island Nation Located In The Indian Ocean, Just Off The Southeastern Coast Of India. 
-                It Is Known For Its Beautiful Beaches, Ancient Temples And Palaces, And Stunning Natural Landscapes, 
-                Including Forests, Mountains, And Wildlife Reserves.
-            </p>
-            <button class="bg-emerald-600 hover:bg-emerald-700 w-40 py-3 rounded-full transition font-semibold">
-                Get Started
-            </button>
+    <nav class="absolute top-0 w-full z-20 p-8 px-16 flex justify-between items-center">
+        <h1 class="text-3xl font-bold tracking-tighter">Travel.</h1>
+        <div class="flex gap-8 text-sm font-medium items-center sinhala">
+            <a href="#" class="hover:text-emerald-400 transition">Home</a>
+            <a href="#" class="hover:text-emerald-400 transition">About</a>
+            <a href="#" class="hover:text-emerald-400 transition">සංචාරක ස්ථාන</a>
+            <a href="#" class="hover:text-emerald-400 transition">ආහාර පාන</a>
+            <a href="#" class="hover:text-emerald-400 transition">සංස්කෘතික උත්සව</a>
+            <a href="#" class="hover:text-emerald-400 transition">හොටෙල්</a>
+            <button id="loginBtn" onclick="loginWithGoogle()" class="bg-emerald-600 px-6 py-2 rounded-full hover:bg-emerald-700 transition">Login</button>
         </div>
+    </nav>
+
+    <div class="hero-section flex flex-col justify-center px-16 max-w-5xl">
+        <h2 class="text-emerald-400 font-bold text-xl tracking-widest mb-2">#VISIT</h2>
+        <h1 class="text-8xl font-black mb-6 leading-tight">SRI LANKA</h1>
+        <p class="text-lg text-gray-200 mb-8 leading-relaxed max-w-xl bg-black/30 p-6 rounded-2xl glass">
+            Sri Lanka Is An Island Nation Located In The Indian Ocean, Just Off The Southeastern Coast Of India. 
+            It Is Known For Its Beautiful Beaches, Ancient Temples And Palaces, And Stunning Natural Landscapes.
+        </p>
+        <button class="bg-white text-black w-40 py-3 rounded-full hover:bg-emerald-400 transition font-bold">
+            Get Started
+        </button>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBLdP4VZSXETBJEZfUpGiNCzUGHrajFyKU",
+            authDomain: "visit-sri-lanka-5705d.firebaseapp.com",
+            projectId: "visit-sri-lanka-5705d",
+            storageBucket: "visit-sri-lanka-5705d.firebasestorage.app",
+            messagingSenderId: "371689372246",
+            appId: "1:371689372246:web:fb90c230a9b6a0b64019f7",
+            measurementId: "G-BY95K9VECN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.loginWithGoogle = () => {
+            signInWithPopup(auth, provider).then((result) => {
+                alert("Welcome, " + result.user.displayName);
+                document.getElementById('loginBtn').innerText = "Logged In";
+            }).catch((err) => console.error(err));
+        };
+    </script>
 </body>
 </html>
