@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit Sri Lanka | Pro</title>
+    <title>Visit Sri Lanka | Official Travel Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; overflow: hidden; }
         #map { height: 100vh; width: 100%; position: absolute; z-index: 0; }
-        .glass-card { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        .glass { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
     </style>
 </head>
-<body class="overflow-hidden">
+<body>
 
     <nav class="absolute top-0 w-full z-20 p-8 flex justify-between items-center pointer-events-none">
         <h1 class="text-3xl font-bold tracking-tighter pointer-events-auto">SRI<span class="text-emerald-400">LANKA</span></h1>
@@ -23,7 +23,7 @@
         </div>
     </nav>
 
-    <div id="ui-panel" class="absolute left-10 top-32 z-10 glass-card p-8 w-96 pointer-events-auto">
+    <div class="absolute left-10 top-32 z-10 glass p-8 w-96 pointer-events-auto">
         <h2 class="text-4xl font-bold mb-4">Discover Paradise</h2>
         <p id="welcomeText" class="text-gray-400 mb-6">Select a destination to explore the beauty of our island.</p>
         <div class="space-y-3">
@@ -40,24 +40,24 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDy2g-_nhK_iDLgzcwe3ZWaUtEgPxDv0Pc",
-            authDomain: "web-site-5633e.firebaseapp.com",
-            projectId: "web-site-5633e",
-            storageBucket: "web-site-5633e.firebasestorage.app",
-            messagingSenderId: "84438284936",
-            appId: "1:84438284936:web:22dccce9d10c003c1f7d3d",
-            measurementId: "G-ME6Q8C2TKK"
+            apiKey: "AIzaSyBLdP4VZSXETBJEZfUpGiNCzUGHrajFyKU",
+            authDomain: "visit-sri-lanka-5705d.firebaseapp.com",
+            projectId: "visit-sri-lanka-5705d",
+            storageBucket: "visit-sri-lanka-5705d.firebasestorage.app",
+            messagingSenderId: "371689372246",
+            appId: "1:371689372246:web:fb90c230a9b6a0b64019f7",
+            measurementId: "G-BY95K9VECN"
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
+        const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
         window.loginWithGoogle = () => {
             signInWithPopup(auth, provider).then((result) => {
-                document.getElementById('welcomeText').innerText = "Welcome, " + result.user.displayName + "!";
+                document.getElementById('welcomeText').innerText = "Welcome, " + result.user.displayName + "! Explore now.";
                 document.getElementById('loginBtn').innerText = "Logged In";
-            });
+            }).catch((err) => alert(err.message));
         };
     </script>
 
