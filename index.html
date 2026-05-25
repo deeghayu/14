@@ -1,52 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Lanka Travel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('https://images.unsplash.com/photo-1596548458907-8898166c303f?q=80&w=2070');
-            background-size: cover; background-position: center; height: 100vh;
-        }
-        .card { transition: 0.3s; cursor: pointer; }
-        .card:hover { transform: translateY(-10px); }
-    </style>
 </head>
-<body class="bg-[#1a251a] text-white">
+<body class="bg-[#1a2e1a] text-white font-sans">
 
-    <nav class="flex justify-between items-center p-8 px-16">
-        <div class="text-xl font-bold tracking-widest">S O SRI LANKA</div>
-        <div class="flex gap-6 text-sm opacity-80">
-            <a href="#">Home</a> <a href="#">Discover</a> <a href="#">History</a> <a href="#">Events</a> 
-            <a href="#">Blogs</a> <a href="#">Interests</a> <a href="#">Media</a> <a href="#">Search 🔍</a>
+    <nav class="flex justify-between items-center p-8">
+        <div class="text-2xl font-bold">SO SRI LANKA</div>
+        <div class="space-x-6">
+            <a href="#" class="hover:text-gray-300">Home</a>
+            <a href="#" class="hover:text-gray-300">Discover</a>
+            <a href="#" class="hover:text-gray-300">History</a>
+            <a href="#" class="hover:text-gray-300">Events</a>
+            <a href="#" class="hover:text-gray-300">Blogs</a>
         </div>
     </nav>
 
-    <div class="hero flex flex-col justify-center px-16">
+    <main class="px-8 mt-20 flex justify-between items-start">
         <div class="max-w-xl">
-            <h1 class="text-7xl font-bold leading-tight mb-6">WELCOME TO SRI LANKA</h1>
-            <p class="text-sm opacity-70 mb-8 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <button class="bg-white/10 border border-white/20 px-10 py-3 rounded-full hover:bg-white/20 transition">Explore</button>
+            <h1 class="text-7xl font-extrabold mb-6">WELCOME <br> TO SRI LANKA</h1>
+            <p class="text-gray-300 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <button class="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200">Explore</button>
         </div>
 
-        <div class="flex gap-6 mt-16">
-            <div class="card w-60 h-80 rounded-2xl overflow-hidden border border-white/10">
-                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=500" class="w-full h-full object-cover">
-                <div class="absolute bottom-4 left-4 font-bold">MIRISSA</div>
+        <div class="flex gap-4">
+            <div class="w-48 h-64 bg-gray-500 rounded-2xl overflow-hidden shadow-lg">
+                <img src="mirissa.jpg" class="w-full h-full object-cover">
             </div>
-            <div class="card w-60 h-80 rounded-2xl overflow-hidden border border-white/10">
-                <img src="https://images.unsplash.com/photo-1627552245715-77d79b9a528a?q=80&w=500" class="w-full h-full object-cover">
-                <div class="absolute bottom-4 left-4 font-bold">SIGIRIYA</div>
+            <div class="w-48 h-64 bg-gray-500 rounded-2xl overflow-hidden shadow-lg">
+                <img src="sigiriya.jpg" class="w-full h-full object-cover">
             </div>
-            <div class="card w-60 h-80 rounded-2xl overflow-hidden border border-white/10">
-                <img src="https://images.unsplash.com/photo-1589308078059-be1415eab49a?q=80&w=500" class="w-full h-full object-cover">
-                <div class="absolute bottom-4 left-4 font-bold">COLOMBO</div>
+            <div class="w-48 h-64 bg-gray-500 rounded-2xl overflow-hidden shadow-lg">
+                <img src="colombo.jpg" class="w-full h-full object-cover">
             </div>
         </div>
-    </div>
+    </main>
 
 </body>
 </html>
