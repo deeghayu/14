@@ -3,80 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit Sri Lanka | Official Travel Portal</title>
+    <title>Travel | Visit Sri Lanka</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; overflow: hidden; }
-        #map { height: 100vh; width: 100%; position: absolute; z-index: 0; }
-        .glass { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=2070'); /* සිගිරිය පින්තූරය */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
     </style>
 </head>
-<body>
+<body class="text-white">
 
-    <nav class="absolute top-0 w-full z-20 p-8 flex justify-between items-center pointer-events-none">
-        <h1 class="text-3xl font-bold tracking-tighter pointer-events-auto">SRI<span class="text-emerald-400">LANKA</span></h1>
-        <div class="flex gap-4 pointer-events-auto">
-            <button id="backBtn" onclick="goBack()" class="hidden bg-white/10 px-6 py-2 rounded-full hover:bg-white/20 transition">← Back</button>
-            <button id="loginBtn" onclick="loginWithGoogle()" class="bg-emerald-500 px-6 py-2 rounded-full font-semibold hover:bg-emerald-400 transition">Login with Google</button>
-        </div>
-    </nav>
+    <div class="hero-section flex flex-col">
+        
+        <nav class="flex justify-between items-center p-8 px-16">
+            <div class="text-2xl font-bold flex items-center">
+                <span class="mr-2">🥾</span> Travel.
+            </div>
+            <div class="flex space-x-8 text-sm font-medium">
+                <a href="#" class="hover:text-emerald-400">Home</a>
+                <a href="#" class="hover:text-emerald-400">Adventure</a>
+                <a href="#" class="hover:text-emerald-400">Map</a>
+                <a href="#" class="hover:text-emerald-400">Blogs</a>
+                <a href="#" class="hover:text-emerald-400">Events</a>
+                <a href="#" class="hover:text-emerald-400">Products</a>
+                <a href="#" class="hover:text-emerald-400">About Us</a>
+                <a href="#" class="font-bold">🔍</a>
+            </div>
+        </nav>
 
-    <div class="absolute left-10 top-32 z-10 glass p-8 w-96 pointer-events-auto">
-        <h2 class="text-4xl font-bold mb-4">Discover Paradise</h2>
-        <p id="welcomeText" class="text-gray-400 mb-6">Select a destination to explore the beauty of our island.</p>
-        <div class="space-y-3">
-            <button onclick="flyToCity(7.9570, 80.7603, 'Sigiriya', 'The majestic Lion Rock Fortress.')" class="w-full text-left p-4 rounded-xl bg-white/5 hover:bg-emerald-500/20 transition border border-white/5">Sigiriya Fortress</button>
-            <button onclick="flyToCity(6.8663, 80.8920, 'Ella', 'Nine Arch Bridge & Tea Estates.')" class="w-full text-left p-4 rounded-xl bg-white/5 hover:bg-emerald-500/20 transition border border-white/5">Ella Peaks</button>
-            <button onclick="flyToCity(6.9271, 79.8612, 'Colombo', 'Vibrant commercial capital.')" class="w-full text-left p-4 rounded-xl bg-white/5 hover:bg-emerald-500/20 transition border border-white/5">Colombo City</button>
+        <div class="flex-grow flex flex-col justify-center px-16 max-w-4xl">
+            <h2 class="text-emerald-400 font-bold text-xl tracking-widest mb-2">#VISIT</h2>
+            <h1 class="text-8xl font-black mb-6">SRI LANKA</h1>
+            <p class="text-lg text-gray-200 mb-8 leading-relaxed max-w-2xl">
+                Sri Lanka Is An Island Nation Located In The Indian Ocean, Just Off The Southeastern Coast Of India. 
+                It Is Known For Its Beautiful Beaches, Ancient Temples And Palaces, And Stunning Natural Landscapes, 
+                Including Forests, Mountains, And Wildlife Reserves.
+            </p>
+            <button class="bg-white/10 backdrop-blur-md border border-white/20 w-40 py-3 rounded-full hover:bg-white/20 transition">
+                Get Started
+            </button>
         </div>
     </div>
 
-    <div id="map"></div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBLdP4VZSXETBJEZfUpGiNCzUGHrajFyKU",
-            authDomain: "visit-sri-lanka-5705d.firebaseapp.com",
-            projectId: "visit-sri-lanka-5705d",
-            storageBucket: "visit-sri-lanka-5705d.firebasestorage.app",
-            messagingSenderId: "371689372246",
-            appId: "1:371689372246:web:fb90c230a9b6a0b64019f7",
-            measurementId: "G-BY95K9VECN"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        window.loginWithGoogle = () => {
-            signInWithPopup(auth, provider).then((result) => {
-                document.getElementById('welcomeText').innerText = "Welcome, " + result.user.displayName + "! Explore now.";
-                document.getElementById('loginBtn').innerText = "Logged In";
-            }).catch((err) => alert(err.message));
-        };
-    </script>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map', { zoomControl: false }).setView([7.8731, 80.7718], 8);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
-
-        function flyToCity(lat, lng, name, desc) {
-            map.flyTo([lat, lng], 14, { duration: 2 });
-            L.popup().setLatLng([lat, lng]).setContent(`<b class="text-black">${name}</b><p class="text-black">${desc}</p>`).openOn(map);
-            document.getElementById('backBtn').classList.remove('hidden');
-        }
-
-        function goBack() {
-            map.flyTo([7.8731, 80.7718], 8, { duration: 2 });
-            map.closePopup();
-            document.getElementById('backBtn').classList.add('hidden');
-        }
-    </script>
 </body>
 </html>
