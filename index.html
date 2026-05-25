@@ -6,26 +6,60 @@
     <title>Visit Sri Lanka | The Pearl of the Indian Ocean</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; }
-        #map { height: 100vh; width: 100%; position: absolute; top: 0; z-index: 0; }
-        .glass { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .nav-link:hover { color: #60a5fa; transition: 0.3s; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        #map { height: 100vh; width: 100%; z-index: 0; }
+        .glass { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-hover:hover { transform: scale(1.05); transition: 0.3s; }
     </style>
 </head>
-<body class="text-white">
+<body class="text-white overflow-hidden">
 
     <nav class="absolute top-0 w-full z-20 p-6 flex justify-between items-center glass">
         <h2 class="text-2xl font-bold tracking-widest">SRI LANKA</h2>
-        <div class="space-x-8 hidden md:flex">
-            <a href="#" class="nav-link">Home</a>
-            <a href="#" class="nav-link">Destinations</a>
-            <a href="#" class="nav-link">Food</a>
-            <a href="#" class="nav-link">Contact</a>
+        <div class="space-x-8 text-sm uppercase">
+            <a href="#" class="hover:text-blue-400">Home</a>
+            <a href="#destinations" class="hover:text-blue-400">Destinations</a>
+            <a href="#" class="hover:text-blue-400">Culture</a>
         </div>
     </nav>
 
-    <div class="relative z-10 pt-32 px-10 max-w-2xl">
-        <h1 class="text-6xl font-extrabold mb-6">Discover the <br><span class="text-blue-400">Pearl of Asia</span></h1>
-        <p class="text-lg mb
+    <div id="destinations" class="absolute left-10 top-24 z-10 glass p-8 rounded-3xl w-96 shadow-2xl">
+        <h1 class="text-5xl font-extrabold mb-6">EXPLORE <br>THE ISLAND</h1>
+        <p class="text-gray-300 mb-8">From misty mountain ranges to golden coastlines, discover the magic of Sri Lanka.</p>
+        
+        <div class="space-y-4">
+            <button onclick="flyToCity(7.9570, 80.7603, 'Sigiriya', 'Ancient fortress built on a massive rock.')" class="w-full bg-white/10 p-4 rounded-xl border border-white/10 card-hover text-left">
+                <span class="block font-bold">Sigiriya</span>
+            </button>
+            <button onclick="flyToCity(6.8663, 80.8920, 'Ella', 'The ultimate paradise for nature lovers.')" class="w-full bg-white/10 p-4 rounded-xl border border-white/10 card-hover text-left">
+                <span class="block font-bold">Ella</span>
+            </button>
+            <button onclick="flyToCity(6.9271, 79.8612, 'Colombo', 'A blend of modernity and heritage.')" class="w-full bg-white/10 p-4 rounded-xl border border-white/10 card-hover text-left">
+                <span class="block font-bold">Colombo</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map', { zoomControl: false }).setView([7.8731, 80.7718], 8);
+
+        // Satellite Imagery Layer
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri'
+        }).addTo(map);
+
+        function flyToCity(lat, lng, name, desc) {
+            map.flyTo([lat, lng], 14, { duration: 2 });
+            L.popup()
+                .setLatLng([lat, lng])
+                .setContent(`<div class="text-black p-3 rounded-lg"><h3 class="font-bold">${name}</h3><p>${desc}</p></div>`)
+                .openOn(map);
+        }
+    </script>
+</body>
+</html>
